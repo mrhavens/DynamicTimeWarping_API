@@ -1,5 +1,3 @@
-#This is a placeholder
-import os
 import numpy as np
 from dtaidistance import dtw
 import sys
@@ -11,7 +9,6 @@ def extract_data(filename):
     with open(filename) as f:
         file_data = f.read() #read the whole file and save to variable data
         data = (file_data.split('-------------------------------------------------'))
-        #print("xxxxxxxxxxxxxxx")
     del data[0]
     #data has all the values seperated
     ##Next we need to split the data to find new stuff.
@@ -41,7 +38,18 @@ def extract_data(filename):
     return coordiante_points,class_label,sign,object_id
 
 
+def accuracy(x,y):
 
+    accuracy_list = []
+    for i in range(len(x)):
+        if int(x[i]) == y[i]:
+            accuracy_list.append(1)
+
+        else:
+            accuracy_list.append(0)
+    accuracy_list = np.array(accuracy_list)
+    print(accuracy_list)
+    print("Accuracy = ", np.sum(accuracy_list)/len(accuracy_list))
 
 
 
@@ -61,11 +69,13 @@ if __name__ == '__main__':
 
         #print(i, distance_list)
         #print("\n\n")
-        match.append([k for k, l in enumerate(distance_list) if l == min(distance_list)])
-        print(distance_list.index(min(distance_list)))
+        match.append([y_train[k] for k, l in enumerate(distance_list) if l == min(distance_list)])
+        #print(distance_list.index(min(distance_list)))
         distance_list.clear()
-        
 
+    """for _match in match:
+        if len(_match) >=2:
+            print(_match)"""
     print(match)
-
-    #print(match)
+    match = np.asarray(match,dtype=np.int)
+    accuracy(match,y_test)
