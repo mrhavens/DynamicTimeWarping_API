@@ -18,7 +18,7 @@ def extract_data(filename):
     class_label = []
     object_id = []
     sign = []
-    X_train = []
+    coordiante_points = []
 
     for example in data:
         lines = example.split("\n",6)
@@ -29,15 +29,16 @@ def extract_data(filename):
 
         temp2 = temp.split('   ')
         temp2 = temp2[1:]
+        temp2 = [i.replace(' ','') for i in temp2]
+        temp3 = [float(i) for i in temp2 if i]
+        #temp4 = [float(i) for i in temp3]
+        temp4 = np.array(temp3)
 
-        temp4 = [float(i) for i in temp2]
-        temp4 = np.array(temp4)
+        coordiante_points.append(temp4.reshape(int(len(temp4)/2),2))
 
-        X_train.append(temp4.reshape(int(len(temp4)/2),2))
+    coordiante_points = np.array(coordiante_points,dtype=object)
 
-    X_train = np.array(X_train,dtype=object)
-
-    print(X_train[0])
+    return coordiante_points,class_label,sign,object_id
 
 
 
@@ -45,4 +46,26 @@ def extract_data(filename):
 
 
 if __name__ == '__main__':
-    extract_data(sys.argv[1])
+    X_train, y_train, train_sign, train_id = extract_data(sys.argv[1])
+    X_test, y_test, test_sign, test_id  = extract_data(sys.argv[2])
+
+    distance_list = []
+    match = []
+
+    for i in range(len(X_test)):
+        for j in range(len(X_train)):
+            series = [X_test[i], X_train[j]]
+            distance = dtw.distance_matrix_fast(series, compact = True)
+            #print(j, distance[0])
+            distance_list.append(distance[0])
+
+        #print(i, distance_list)
+        #print("\n\n")
+        match.append([k for k, l in enumerate(distance_list) if l == min(distance_list)])
+        print(distance_list.index(min(distance_list)))
+        distance_list.clear()
+        
+
+    print(match)
+
+    #print(match)
