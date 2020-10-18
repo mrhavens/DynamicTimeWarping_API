@@ -42,7 +42,8 @@ def accuracy(x,y):
 
     accuracy_list = []
     for i in range(len(x)):
-        if int(x[i]) == y[i]:
+        #print(x[i], y[i])
+        if int(x[i]) == int(y[i]):
             accuracy_list.append(1)
 
         else:
@@ -59,23 +60,20 @@ if __name__ == '__main__':
 
     distance_list = []
     match = []
+    from tslearn.metrics import dtw_path
+
+    path, dist = dtw_path(X_test[0],X_train[1])
+    print(dist)
 
     for i in range(len(X_test)):
         for j in range(len(X_train)):
-            series = [X_test[i], X_train[j]]
-            distance = dtw.distance_matrix_fast(series, compact = True)
-            #print(j, distance[0])
-            distance_list.append(distance[0])
+            _, distance = dtw_path(X_test[i],X_train[j])
+            distance_list.append(distance)
+        match.append(y_train[distance_list.index(min(distance_list))])
 
-        #print(i, distance_list)
-        #print("\n\n")
-        match.append([y_train[k] for k, l in enumerate(distance_list) if l == min(distance_list)])
-        #print(distance_list.index(min(distance_list)))
         distance_list.clear()
 
-    """for _match in match:
-        if len(_match) >=2:
-            print(_match)"""
-    print(match)
+
+    print(y_test)
     match = np.asarray(match,dtype=np.int)
     accuracy(match,y_test)
