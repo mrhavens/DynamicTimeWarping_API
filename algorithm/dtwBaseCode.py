@@ -2,6 +2,12 @@ import numpy as np
 from dtaidistance import dtw
 import sys
 
+"""
+
+Impemented DTW code, need to merge with the kNN algorithm
+
+"""
+
 ###First step is to read in the file :
 
 def extract_data(filename):
