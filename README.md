@@ -61,7 +61,7 @@ This project will be divided into three parts as listed below.
 
 There are many useful resources that are out that that have good materials on Dynamic Time Warping. Here I have listed all the resources that I found out to be useful
 
-* [Vassilis Athitsos Lecture notes](#http://vlm1.uta.edu/~athitsos/courses/cse4309_fall2020/lectures/15_dtw.pdf)
+* [Vassilis Athitsos Lecture notes](http://vlm1.uta.edu/~athitsos/courses/cse4309_fall2020/lectures/15_dtw.pdf)
 * [Jeremy Zheng's Towardsai blog post](https://towardsdatascience.com/dynamic-time-warping-3933f25fcdd)
 * [Dynamic Time Warping Wikipedia](https://en.wikipedia.org/wiki/Dynamic_time_warping)
 
