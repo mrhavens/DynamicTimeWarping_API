@@ -1,6 +1,7 @@
 import numpy as np
 from dtaidistance import dtw
 import sys
+from fastdtw import fastdtw
 
 """
 
@@ -57,13 +58,12 @@ def accuracy(x,y):
     accuracy_list = np.array(accuracy_list)
     print(accuracy_list)
     print("Accuracy = ", np.sum(accuracy_list)/len(accuracy_list))
+    return np.sum(accuracy_list)/len(accuracy_list)
 
 
-
-if __name__ == '__main__':
-    X_train, y_train, train_sign, train_id = extract_data(sys.argv[1])
-    X_test, y_test, test_sign, test_id  = extract_data(sys.argv[2])
-
+def main(train_file,test_file):
+    X_train, y_train, train_sign, train_id = extract_data(train_file)
+    X_test, y_test, test_sign, test_id  = extract_data(test_file)
     distance_list = []
     match = []
     from tslearn.metrics import dtw_path
@@ -73,13 +73,15 @@ if __name__ == '__main__':
 
     for i in range(len(X_test)):
         for j in range(len(X_train)):
-            _, distance = dtw_path(X_test[i],X_train[j])
+            distance,_ = fastdtw(X_test[i],X_train[j])
+            print(distance)
             distance_list.append(distance)
         match.append(y_train[distance_list.index(min(distance_list))])
 
         distance_list.clear()
 
 
-    print(y_test)
+    #print(y_test)
     match = np.asarray(match,dtype=np.int)
-    accuracy(match,y_test)
+
+    return accuracy(match,y_test)*100
