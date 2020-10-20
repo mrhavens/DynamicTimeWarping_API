@@ -1,11 +1,17 @@
 from flask import Flask, render_template
-#from algorithm.dwtBaseCode import *
 import sys
+import os
 # insert at 1, 0 is the script path (or '' in REPL)
 sys.path.insert(1, '/Users/nisargshah/Desktop/Research/DynamicTimeWarping_API/algorithm')
 from dtwBaseCode import main
-
 import dtwBaseCode
+
+"""
+
+
+This is basic implementation of Flask as shown in their documentation here https://flask.palletsprojects.com/en/1.1.x/quickstart/
+
+"""
 app = Flask(__name__)
 
 @app.route("/")

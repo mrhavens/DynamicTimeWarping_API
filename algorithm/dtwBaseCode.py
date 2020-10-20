@@ -1,17 +1,26 @@
 import numpy as np
 from dtaidistance import dtw
 import sys
+from fastdtw import fastdtw
 
 """
-
-Impemented DTW code, need to merge with the kNN algorithm
-
+Impemented DTW code here
 """
 
 ###First step is to read in the file :
 
 def extract_data(filename):
-    #data =  []
+    """
+    This function will take the raw file and then seperate all the data that are necessary
+
+    input : filename (with relative position)
+
+    outputs: co-ordinate points (actual data points)
+             class_label (actual class label list )
+             sign (what does that sign mean)
+             object_id (ehat ids object id)
+
+    """
     with open(filename) as f:
         file_data = f.read() #read the whole file and save to variable data
         data = (file_data.split('-------------------------------------------------'))
@@ -45,7 +54,15 @@ def extract_data(filename):
 
 
 def accuracy(x,y):
+    """
+    This fucntion will find out the accuracy of our model
 
+    input: x (this will be a list of all the predicted output)
+           y (actual output)
+
+    output: accuracy
+
+    """
     accuracy_list = []
     for i in range(len(x)):
         #print(x[i], y[i])
@@ -57,29 +74,28 @@ def accuracy(x,y):
     accuracy_list = np.array(accuracy_list)
     print(accuracy_list)
     print("Accuracy = ", np.sum(accuracy_list)/len(accuracy_list))
+    return np.mean(accuracy_list)
 
 
-
-if __name__ == '__main__':
-    X_train, y_train, train_sign, train_id = extract_data(sys.argv[1])
-    X_test, y_test, test_sign, test_id  = extract_data(sys.argv[2])
-
+def main(train_file,test_file):
+    X_train, y_train, train_sign, train_id = extract_data(train_file)
+    X_test, y_test, test_sign, test_id  = extract_data(test_file)
     distance_list = []
     match = []
-    from tslearn.metrics import dtw_path
-
     path, dist = dtw_path(X_test[0],X_train[1])
     print(dist)
 
     for i in range(len(X_test)):
         for j in range(len(X_train)):
-            _, distance = dtw_path(X_test[i],X_train[j])
+            distance,_ = fastdtw(X_test[i],X_train[j])
+            print(distance)
             distance_list.append(distance)
         match.append(y_train[distance_list.index(min(distance_list))])
 
         distance_list.clear()
 
 
-    print(y_test)
+    #print(y_test)
     match = np.asarray(match,dtype=np.int)
-    accuracy(match,y_test)
+
+    return accuracy(match,y_test)*100
