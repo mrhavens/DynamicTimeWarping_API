@@ -55,7 +55,8 @@ This project will be divided into three parts as listed below.
 
 - [x] Implementing Dynamic Time Warping in python
 - [x] Integrate a REST API
-- [ ] Integrate Amazon S3 bucket access
+- [x] Integrate MinIO ( Amazon S3 alternative) bucket access
+- [ ] Complete the documentation
 
 ## References
 
