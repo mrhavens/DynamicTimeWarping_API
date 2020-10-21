@@ -12,10 +12,10 @@ Impemented DTW code, need to merge with the kNN algorithm
 ###First step is to read in the file :
 
 def extract_data(filename):
-    #data =  []
+    data =  []
     with open(filename) as f:
         file_data = f.read() #read the whole file and save to variable data
-        data = (file_data.split('-------------------------------------------------'))
+    data = (file_data.split('-------------------------------------------------'))
     del data[0]
     #data has all the values seperated
     ##Next we need to split the data to find new stuff.
@@ -66,11 +66,6 @@ def main(train_file,test_file):
     X_test, y_test, test_sign, test_id  = extract_data(test_file)
     distance_list = []
     match = []
-    from tslearn.metrics import dtw_path
-
-    path, dist = dtw_path(X_test[0],X_train[1])
-    print(dist)
-
     for i in range(len(X_test)):
         for j in range(len(X_train)):
             distance,_ = fastdtw(X_test[i],X_train[j])

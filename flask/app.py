@@ -1,16 +1,28 @@
 from flask import Flask, render_template
-#from algorithm.dwtBaseCode import *
 import sys
+import os
 # insert at 1, 0 is the script path (or '' in REPL)
-sys.path.insert(1, '/Users/nisargshah/Desktop/Research/DynamicTimeWarping_API/algorithm')
+
+sys.path.insert(0, '../algorithm')
 from dtwBaseCode import main
+sys.path.insert(0, '../MinIO')
+print(sys.path)
+import minio_integrate
 
 import dtwBaseCode
+
+"""
+
+
+This is basic implementation of Flask as shown in their documentation here https://flask.palletsprojects.com/en/1.1.x/quickstart/
+
+"""
 app = Flask(__name__)
 
 @app.route("/")
 def hello():
-    x = dtwBaseCode.main(sys.argv[1],sys.argv[2])
+    minio_integrate.main()
+    x = dtwBaseCode.main('fs.json', 'fs1.json')
     return render_template('index.html', variable=x)
 
 
