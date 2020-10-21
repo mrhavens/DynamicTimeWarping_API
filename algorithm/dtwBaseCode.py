@@ -74,8 +74,13 @@ def main(train_file,test_file):
     for i in range(len(X_test)):
         for j in range(len(X_train)):
             distance,_ = fastdtw(X_test[i],X_train[j])
-            print(distance)
+            #print(distance)
             distance_list.append(distance)
+        if y_train[distance_list.index(min(distance_list))] == y_test[i]:
+            acc = 1
+        else:
+            acc = 0
+        print("ID=%5s, predicted=%3s, true=%3s, accuracy=%4.2s, distance = %.2s\n"%(test_id[i], y_train[distance_list.index(min(distance_list))], y_test[i], acc, distance))
         match.append(y_train[distance_list.index(min(distance_list))])
 
         distance_list.clear()
