@@ -2,6 +2,7 @@ from minio import Minio
 from minio.error import ResponseError
 import json
 from http.client import HTTPResponse
+import os
 
 def main():
     minioClient = Minio(
@@ -14,11 +15,11 @@ def main():
     print("hi")
     try:
         minioClient.fget_object('test','asl_training.txt','fs.json')
+        os.rename('../flask/fs.json','../flask/train.json' )
     except ResponseError as err:
         print(err)
     try:
-        minioClient.fget_object('test','asl_test.txt','fs1.json')
+        minioClient.fget_object('test','asl_test.txt','fs.json')
+        os.rename('../flask/fs.json','../flask/test.json' )
     except ResponseError as err:
         print(err)
-
-    

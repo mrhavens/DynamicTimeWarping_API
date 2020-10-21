@@ -22,7 +22,7 @@ app = Flask(__name__)
 @app.route("/")
 def hello():
     minio_integrate.main()
-    x = dtwBaseCode.main('fs.json', 'fs1.json')
+    x = dtwBaseCode.main('train.json', 'test.json')
     return render_template('index.html', variable=x)
 
 
