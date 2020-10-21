@@ -66,19 +66,22 @@ def main(train_file,test_file):
     X_test, y_test, test_sign, test_id  = extract_data(test_file)
     distance_list = []
     match = []
-    for i in range(len(X_test)):
-        for j in range(len(X_train)):
-            distance,_ = fastdtw(X_test[i],X_train[j])
-            #print(distance)
-            distance_list.append(distance)
-        if y_train[distance_list.index(min(distance_list))] == y_test[i]:
-            acc = 1
-        else:
-            acc = 0
-        print("ID=%5s, predicted=%3s, true=%3s, accuracy=%4.2s, distance = %.2s\n"%(test_id[i], y_train[distance_list.index(min(distance_list))], y_test[i], acc, distance))
-        match.append(y_train[distance_list.index(min(distance_list))])
+    with open("output.txt", "a") as f:
+        for i in range(len(X_test)):
+            for j in range(len(X_train)):
+                distance,_ = fastdtw(X_test[i],X_train[j])
+                #print(distance)
+                distance_list.append(distance)
+            if y_train[distance_list.index(min(distance_list))] == y_test[i]:
+                acc = 1
+            else:
+                acc = 0
+            f.write("ID=%5s, predicted=%3s, true=%3s, accuracy=%4.2s, distance = %.2s\n"%(test_id[i], y_train[distance_list.index(min(distance_list))], y_test[i], acc, distance))
+            print("ID=%5s, predicted=%3s, true=%3s, accuracy=%4.2s, distance = %.2s\n"%(test_id[i], y_train[distance_list.index(min(distance_list))], y_test[i], acc, distance))
 
-        distance_list.clear()
+            match.append(y_train[distance_list.index(min(distance_list))])
+
+            distance_list.clear()
 
 
     #print(y_test)

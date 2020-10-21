@@ -23,6 +23,8 @@ app = Flask(__name__)
 def hello():
     minio_integrate.main()
     x = dtwBaseCode.main('train.json', 'test.json')
+    minio_integrate.upload('../flask/output.txt')
+    os.remove('output.txt')
     return render_template('index.html', variable=x)
 
 
