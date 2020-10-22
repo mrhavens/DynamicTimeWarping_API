@@ -103,7 +103,7 @@ After seeing this, we need to now copy the Access Key and secret key, that we se
 After entering those credentials, you can now login and see the main MinIO website. In this website we can navigate around to see what everything does.
 
 ### Create a bucket
-To create a bucket, you can click on the plus sign that is there on the bottom right corner. After clicking that you will see two options, one is to create a bucket and the other is to upload a file. Create two bucket, the first one should be names test and the other one should be named output_bucket
+To create a bucket, you can click on the plus sign that is there on the bottom right corner. After clicking that you will see two options, one is to create a bucket and the other is to upload a file. Create two bucket, the first one should be names test and the other one should be named output_bucket.
 
 <INSERT IMAGE HERE >
 
