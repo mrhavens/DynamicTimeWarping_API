@@ -10,6 +10,7 @@ Impemented DTW code here
 ###First step is to read in the file :
 
 def extract_data(filename):
+<<<<<<< HEAD
     """
     This function will take the raw file and then seperate all the data that are necessary
 
@@ -21,9 +22,12 @@ def extract_data(filename):
              object_id (ehat ids object id)
 
     """
+=======
+    data =  []
+>>>>>>> 4eeab2b2afe7e94e1b6125cba479b9d2ed52d050
     with open(filename) as f:
         file_data = f.read() #read the whole file and save to variable data
-        data = (file_data.split('-------------------------------------------------'))
+    data = (file_data.split('-------------------------------------------------'))
     del data[0]
     #data has all the values seperated
     ##Next we need to split the data to find new stuff.
@@ -74,7 +78,11 @@ def accuracy(x,y):
     accuracy_list = np.array(accuracy_list)
     print(accuracy_list)
     print("Accuracy = ", np.sum(accuracy_list)/len(accuracy_list))
+<<<<<<< HEAD
     return np.mean(accuracy_list)
+=======
+    return np.sum(accuracy_list)/len(accuracy_list)
+>>>>>>> 4eeab2b2afe7e94e1b6125cba479b9d2ed52d050
 
 
 def main(train_file,test_file):
@@ -82,6 +90,7 @@ def main(train_file,test_file):
     X_test, y_test, test_sign, test_id  = extract_data(test_file)
     distance_list = []
     match = []
+<<<<<<< HEAD
     path, dist = dtw_path(X_test[0],X_train[1])
     print(dist)
 
@@ -91,10 +100,30 @@ def main(train_file,test_file):
             print(distance)
             distance_list.append(distance)
         match.append(y_train[distance_list.index(min(distance_list))])
+=======
+    with open("output.txt", "a") as f:
+        for i in range(len(X_test)):
+            for j in range(len(X_train)):
+                distance,_ = fastdtw(X_test[i],X_train[j])
+                #print(distance)
+                distance_list.append(distance)
+            if y_train[distance_list.index(min(distance_list))] == y_test[i]:
+                acc = 1
+            else:
+                acc = 0
+            f.write("ID=%5s, predicted=%3s, true=%3s, accuracy=%4.2s, distance = %.2s\n"%(test_id[i], y_train[distance_list.index(min(distance_list))], y_test[i], acc, distance))
+            print("ID=%5s, predicted=%3s, true=%3s, accuracy=%4.2s, distance = %.2s\n"%(test_id[i], y_train[distance_list.index(min(distance_list))], y_test[i], acc, distance))
 
-        distance_list.clear()
+            match.append(y_train[distance_list.index(min(distance_list))])
+
+            distance_list.clear()
+>>>>>>> 4eeab2b2afe7e94e1b6125cba479b9d2ed52d050
 
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 4eeab2b2afe7e94e1b6125cba479b9d2ed52d050
     #print(y_test)
     match = np.asarray(match,dtype=np.int)
 

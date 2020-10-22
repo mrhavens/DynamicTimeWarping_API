@@ -2,8 +2,16 @@ from flask import Flask, render_template
 import sys
 import os
 # insert at 1, 0 is the script path (or '' in REPL)
-sys.path.insert(1, '/Users/nisargshah/Desktop/Research/DynamicTimeWarping_API/algorithm')
+
+sys.path.insert(0, '../algorithm')
 from dtwBaseCode import main
+<<<<<<< HEAD
+=======
+sys.path.insert(0, '../MinIO')
+print(sys.path)
+import minio_integrate
+
+>>>>>>> 4eeab2b2afe7e94e1b6125cba479b9d2ed52d050
 import dtwBaseCode
 
 """
@@ -16,7 +24,10 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello():
-    x = dtwBaseCode.main(sys.argv[1],sys.argv[2])
+    minio_integrate.main()
+    x = dtwBaseCode.main('train.json', 'test.json')
+    minio_integrate.upload('../flask/output.txt')
+    os.remove('output.txt')
     return render_template('index.html', variable=x)
 
 
