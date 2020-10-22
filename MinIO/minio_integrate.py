@@ -34,5 +34,5 @@ def upload(file_path):
     file_stat = os.stat(file_path)
     with open(file_path, 'rb') as data:
         minioClient.put_object(
-            'test', 'output', data, file_stat.st_size, 'text/plain',
+            'output_bucket', 'output', data, file_stat.st_size, 'text/plain',
         )
