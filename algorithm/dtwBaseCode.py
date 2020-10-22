@@ -4,27 +4,27 @@ import sys
 from fastdtw import fastdtw
 
 """
-Impemented DTW code here
+
+In this program we will be calculating the DTW distance and finding the best
+results with accuracy
+
 """
 
 ###First step is to read in the file :
 
 def extract_data(filename):
-<<<<<<< HEAD
     """
-    This function will take the raw file and then seperate all the data that are necessary
+    This function will help us extract all the data from the file
 
-    input : filename (with relative position)
+    input: filename ( Along with its realtive path)
 
-    outputs: co-ordinate points (actual data points)
-             class_label (actual class label list )
-             sign (what does that sign mean)
-             object_id (ehat ids object id)
+    output: coordiante_points ( which contains all the actual data/co-ordinate points)
+            class_label ( This are the actual classes of each object)
+            sign ( What the sign means for that particualr class-label )
+            object_id ( What is the unique identification number, also given in file )
 
     """
-=======
     data =  []
->>>>>>> 4eeab2b2afe7e94e1b6125cba479b9d2ed52d050
     with open(filename) as f:
         file_data = f.read() #read the whole file and save to variable data
     data = (file_data.split('-------------------------------------------------'))
@@ -59,72 +59,54 @@ def extract_data(filename):
 
 def accuracy(x,y):
     """
-    This fucntion will find out the accuracy of our model
+    This fuction will allow us to calculate simple accuracy % of our model
 
-    input: x (this will be a list of all the predicted output)
-           y (actual output)
+    input: x ( array 1)
+           y ( array 2)
 
-    output: accuracy
 
     """
     accuracy_list = []
     for i in range(len(x)):
-        #print(x[i], y[i])
         if int(x[i]) == int(y[i]):
             accuracy_list.append(1)
-
         else:
             accuracy_list.append(0)
     accuracy_list = np.array(accuracy_list)
-    print(accuracy_list)
-    print("Accuracy = ", np.sum(accuracy_list)/len(accuracy_list))
-<<<<<<< HEAD
-    return np.mean(accuracy_list)
-=======
     return np.sum(accuracy_list)/len(accuracy_list)
->>>>>>> 4eeab2b2afe7e94e1b6125cba479b9d2ed52d050
 
 
 def main(train_file,test_file):
+    """
+    This function helps us to calcuate out DTW distance for each test set.
+    We take in each test object and find the DTW distance with each train object
+    and find the class_label of the train object with the lowest distance and store
+    it in our output.txt file
+
+    input: train_file , test_file
+
+    output: we call the accuracy function which then prints out the accuracy on
+    the screen
+
+    """
     X_train, y_train, train_sign, train_id = extract_data(train_file)
     X_test, y_test, test_sign, test_id  = extract_data(test_file)
     distance_list = []
     match = []
-<<<<<<< HEAD
-    path, dist = dtw_path(X_test[0],X_train[1])
-    print(dist)
-
-    for i in range(len(X_test)):
-        for j in range(len(X_train)):
-            distance,_ = fastdtw(X_test[i],X_train[j])
-            print(distance)
-            distance_list.append(distance)
-        match.append(y_train[distance_list.index(min(distance_list))])
-=======
     with open("output.txt", "a") as f:
         for i in range(len(X_test)):
             for j in range(len(X_train)):
                 distance,_ = fastdtw(X_test[i],X_train[j])
-                #print(distance)
                 distance_list.append(distance)
             if y_train[distance_list.index(min(distance_list))] == y_test[i]:
                 acc = 1
             else:
                 acc = 0
             f.write("ID=%5s, predicted=%3s, true=%3s, accuracy=%4.2s, distance = %.2s\n"%(test_id[i], y_train[distance_list.index(min(distance_list))], y_test[i], acc, distance))
-            print("ID=%5s, predicted=%3s, true=%3s, accuracy=%4.2s, distance = %.2s\n"%(test_id[i], y_train[distance_list.index(min(distance_list))], y_test[i], acc, distance))
-
             match.append(y_train[distance_list.index(min(distance_list))])
 
             distance_list.clear()
->>>>>>> 4eeab2b2afe7e94e1b6125cba479b9d2ed52d050
 
-
-<<<<<<< HEAD
-
-=======
->>>>>>> 4eeab2b2afe7e94e1b6125cba479b9d2ed52d050
-    #print(y_test)
     match = np.asarray(match,dtype=np.int)
 
     return accuracy(match,y_test)*100

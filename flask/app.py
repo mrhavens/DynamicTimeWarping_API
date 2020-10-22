@@ -5,13 +5,10 @@ import os
 
 sys.path.insert(0, '../algorithm')
 from dtwBaseCode import main
-<<<<<<< HEAD
-=======
 sys.path.insert(0, '../MinIO')
 print(sys.path)
 import minio_integrate
 
->>>>>>> 4eeab2b2afe7e94e1b6125cba479b9d2ed52d050
 import dtwBaseCode
 
 """
@@ -27,7 +24,7 @@ def hello():
     minio_integrate.main()
     x = dtwBaseCode.main('train.json', 'test.json')
     minio_integrate.upload('../flask/output.txt')
-    os.remove('output.txt')
+    os.remove('output.txt') # We do this so that we don't append any exisiting file if we run the program again
     return render_template('index.html', variable=x)
 
 

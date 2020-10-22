@@ -5,10 +5,16 @@ from http.client import HTTPResponse
 import os
 
 def main():
+    """
+
+    This function will be used to get the data from out MinIO and copy it to
+    our flask folder.
+
+    """
     minioClient = Minio(
         '127.0.0.1:9000',
-        access_key='minioadmin',
-        secret_key='minioadmin',
+        access_key='YOUR_ACCESS_KEY',
+        secret_key='YOUR_SECRET_KEY',
         secure=False,  #Set secure = True if you are using a https connection
     )
     #try:
@@ -25,6 +31,12 @@ def main():
         print(err)
 
 def upload(file_path):
+    """
+    This fucntion will be used to upload the file to MinIO bucket
+
+    input: file_path ( This will help us open the file and extract the data)
+
+    """
     minioClient = Minio(
         '127.0.0.1:9000',
         access_key='minioadmin',
