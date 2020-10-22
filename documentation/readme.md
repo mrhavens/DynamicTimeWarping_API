@@ -19,7 +19,6 @@ This dataset consist of ASL (American Sign Language) data points where we keep t
 
 Both Train and test data set follow the same convention with each example separated by "-------" lines.
 
-Here is an example image taken from the data set.
 
 <INSERT IMAGE HERE>
 
