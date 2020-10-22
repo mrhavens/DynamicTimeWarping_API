@@ -24,7 +24,7 @@ def hello():
     minio_integrate.main()
     x = dtwBaseCode.main('train.json', 'test.json')
     minio_integrate.upload('../flask/output.txt')
-    os.remove('output.txt')
+    os.remove('output.txt') # We do this so that we don't append any exisiting file if we run the program again
     return render_template('index.html', variable=x)
 
 

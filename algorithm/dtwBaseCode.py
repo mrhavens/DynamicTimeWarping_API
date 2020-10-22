@@ -5,13 +5,25 @@ from fastdtw import fastdtw
 
 """
 
-Impemented DTW code, need to merge with the kNN algorithm
+In this program we will be calculating the DTW distance and finding the best
+results with accuracy
 
 """
 
 ###First step is to read in the file :
 
 def extract_data(filename):
+    """
+    This function will help us extract all the data from the file
+
+    input: filename ( Along with its realtive path)
+
+    output: coordiante_points ( which contains all the actual data/co-ordinate points)
+            class_label ( This are the actual classes of each object)
+            sign ( What the sign means for that particualr class-label )
+            object_id ( What is the unique identification number, also given in file )
+
+    """
     data =  []
     with open(filename) as f:
         file_data = f.read() #read the whole file and save to variable data
@@ -46,22 +58,37 @@ def extract_data(filename):
 
 
 def accuracy(x,y):
+    """
+    This fuction will allow us to calculate simple accuracy % of our model
 
+    input: x ( array 1)
+           y ( array 2)
+
+
+    """
     accuracy_list = []
     for i in range(len(x)):
-        #print(x[i], y[i])
         if int(x[i]) == int(y[i]):
             accuracy_list.append(1)
-
         else:
             accuracy_list.append(0)
     accuracy_list = np.array(accuracy_list)
-    print(accuracy_list)
-    print("Accuracy = ", np.sum(accuracy_list)/len(accuracy_list))
     return np.sum(accuracy_list)/len(accuracy_list)
 
 
 def main(train_file,test_file):
+    """
+    This function helps us to calcuate out DTW distance for each test set.
+    We take in each test object and find the DTW distance with each train object
+    and find the class_label of the train object with the lowest distance and store
+    it in our output.txt file
+
+    input: train_file , test_file
+
+    output: we call the accuracy function which then prints out the accuracy on
+    the screen
+
+    """
     X_train, y_train, train_sign, train_id = extract_data(train_file)
     X_test, y_test, test_sign, test_id  = extract_data(test_file)
     distance_list = []
@@ -70,21 +97,16 @@ def main(train_file,test_file):
         for i in range(len(X_test)):
             for j in range(len(X_train)):
                 distance,_ = fastdtw(X_test[i],X_train[j])
-                #print(distance)
                 distance_list.append(distance)
             if y_train[distance_list.index(min(distance_list))] == y_test[i]:
                 acc = 1
             else:
                 acc = 0
             f.write("ID=%5s, predicted=%3s, true=%3s, accuracy=%4.2s, distance = %.2s\n"%(test_id[i], y_train[distance_list.index(min(distance_list))], y_test[i], acc, distance))
-            print("ID=%5s, predicted=%3s, true=%3s, accuracy=%4.2s, distance = %.2s\n"%(test_id[i], y_train[distance_list.index(min(distance_list))], y_test[i], acc, distance))
-
             match.append(y_train[distance_list.index(min(distance_list))])
 
             distance_list.clear()
 
-
-    #print(y_test)
     match = np.asarray(match,dtype=np.int)
 
     return accuracy(match,y_test)*100
