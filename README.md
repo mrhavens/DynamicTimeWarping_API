@@ -68,7 +68,7 @@ There are many useful resources that are out that that have good materials on Dy
 
 
 
-## License
+## MIT License
 
 Copyright 2020 [Nisarg Shah](https://nisargushah.com/)
 
