@@ -45,9 +45,16 @@ foo@bar:~$ conda activate myenv
 To install all the requirements, copy this command in your terminal or Powershell with your virtual environment on.
 
 ```console
-foo@bar:~ pip install -r requirements.txt
+foo@bar:~$pip install -r requirements.txt
 ```
 
+To run the code, go to th flask directory and follow this step: 
+
+```console
+foo@bar:~$ python3 app.py
+
+```
+Please note that it takes few mintues to finish the calculations and show the output ( roughly 10 mins on a laptop without GPUs )
 
 ## Roadmap
 
@@ -56,7 +63,7 @@ This project will be divided into three parts as listed below.
 - [x] Implementing Dynamic Time Warping in python
 - [x] Integrate a REST API
 - [x] Integrate MinIO ( Amazon S3 alternative) bucket access
-- [ ] Complete the documentation
+- [x] Complete the documentation
 
 ## References
 
